@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async And Await functions</title>
+
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        body{
+            background: linear-gradient(70deg, blue, pink);
+        }
+
+        .dshboard{
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container{
+            width: 500px;
+            height: 400px;
+            border: none;
+            padding: 30px 25px 10px 25px;
+            background-color: transparent;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+        }
+
+        .container2{
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .form_section{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 60px;
+        }
+        
+
+        input{
+            font-size: 18px;  
+            padding-left: 12px;
+            border-radius: 18px;
+            border-style: none;
+            border: none;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+            width: 280px;
+            height: 24px;
+        }
+
+        #click{
+            border-radius: 30px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: white;
+            background-color: rgb(4, 4, 4);
+            border-style: none;
+            width: 150px;
+            cursor: pointer;
+            transition: opacity 0.15s;
+            font-size: 18px;
+            margin-bottom: 30px;
+            transition: background-color 0.25s,
+      color 0.25s;
+        }
+        #click:active{
+            background-color: rgb(255, 255, 255);
+            color: black;
+        }
+
+        .nav{
+            display: flex;
+            flex-direction: row;
+            gap: 60px;
+            font-size: 1.5rem;
+            margin-top: 30px;
+            justify-content: end;
+            margin-right: 60px;
+        }
+        a{
+            transition: all 300ms ease;
+            color: black;
+            text-decoration: none;
+            text-decoration-color: white;
+        }
+
+        a:hover{
+            color: rgb(255, 255, 255);
+            text-decoration: underline;
+            text-underline-offset: 1rem;
+            text-decoration-color: rgb(255, 253, 253);
+        }
+
+        .div_container div{
+            width: 200px;
+            height: 100px;
+            border: none;
+            padding: 30px 25px 10px 25px;
+            background-color: transparent;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+        }
+
+
+        
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="#dsh-board">Dashboard</a>        
+        <a href="#stud-info">Student Info</a>        
+    </nav>
+    <div class="dshboard" id="dsh-board">
+        <div class="container" >
+            <h1 class="txt">Dashboard</h1>
+            <br>
+            <hr style="background-color:rgb(0, 0, 0); height:1px; border-width:0;">
+            <div class="form_section">
+                <h1 class="txt">Click Submit To display Info</h1>
+                <br><br>
+                <button type="submit" id="click">Submit</button>
+            </div>
+        </div>   
+    </div>
+
+    <div id="stud-info" class="container2">
+
+        <h1 style="margin-top: 40px; text-align: center;">Student Details</h1><br><br>
+
+        <div class="div_container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; column-gap: 30px; row-gap: 30px; margin: 30px 30px 30px 30px ;">
+
+        </div>
+
+    </div> 
+    
+
+    
+    
+
+    <script>
+        
+        let btn = document.getElementById("click")
+
+        let div_container = document.getElementsByClassName("div_container")[0]
+
+        btn.addEventListener("click", async function sample() {
+
+            let res = await fetch("https://jsonplaceholder.typicode.com/todos");
+            let json = await res.json();
+            console.log(json)
+
+            json.forEach((items,index) => {
+
+                console.log(`${index} : ${items.title}`)
+
+                let div = document.createElement("div")
+                div.innerHTML = `Data : ${index}`
+
+                let p1 = document.createElement("p")
+                p1.innerHTML = "userId : " + items.userId
+
+                let p2 = document.createElement("p")
+                p2.innerHTML = "title : " + items.title
+
+                let p3 = document.createElement("p")
+                p3.innerHTML = "completed : " + items.completed
+
+                div_container.appendChild(div)
+                div.appendChild(p1)
+                div.appendChild(p2)
+                div.appendChild(p3)
+
+            });
+
+        })
+
+        
+    </script>
+    
+</body>
+</html>
